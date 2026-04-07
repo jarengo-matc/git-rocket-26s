@@ -1,4 +1,4 @@
-const rocket = [
+export const rocket = [
   String.raw`            /\            `,
   String.raw`           /  \           `,
   String.raw`          /____\          `,
@@ -29,7 +29,7 @@ const rocket = [
   String.raw`       /____||____\       `,
 ];
 
-const flames = [
+export const flames = [
   [
     String.raw`          \  :  /         `,
     String.raw`           . : .          `,
@@ -52,6 +52,10 @@ const flames = [
     String.raw`            .:.           `,
   ],
 ];
+
+// Only run animation when executed directly
+const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/'));
+if (isMain) {
 
 const rows = process.stdout.rows || 40;
 const totalFrames = rocket.length + rows;
@@ -93,3 +97,5 @@ process.on('SIGINT', () => {
   process.stdout.write('\x1B[?25h');
   process.exit();
 });
+
+} // end isMain
