@@ -57,11 +57,22 @@ export const flames = [
 const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/'));
 if (isMain) {
 
-import('asciify').then(({ default: asciify }) => {
+import('asciify').then(async ({ default: asciify }) => {
 
-// Parse -who argument
+// Parse and sanitize -who argument
 const whoIdx = process.argv.indexOf('-who');
-const name = whoIdx !== -1 && process.argv[whoIdx + 1] ? process.argv[whoIdx + 1] : null;
+const rawName = whoIdx !== -1 && process.argv[whoIdx + 1] ? process.argv[whoIdx + 1] : null;
+
+let name = null;
+if (rawName !== null) {
+  const { sanitizeWho } = await import('./sanitize.js');
+  const result = sanitizeWho(rawName);
+  if (!result.valid) {
+    console.error(result.reason);
+    process.exit(1);
+  }
+  name = result.value;
+}
 
 const rows = process.stdout.rows || 40;
 const totalFrames = rocket.length + rows;

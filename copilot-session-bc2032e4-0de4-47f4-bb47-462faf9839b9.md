@@ -3,8 +3,8 @@
 > [!NOTE]
 > - **Session ID:** `bc2032e4-0de4-47f4-bb47-462faf9839b9`  
 > - **Started:** 4/7/2026, 2:55:01 PM  
-> - **Duration:** 23m 38s  
-> - **Exported:** 4/7/2026, 3:18:40 PM  
+> - **Duration:** 39m 46s  
+> - **Exported:** 4/7/2026, 3:34:48 PM  
 
 ---
 
@@ -1778,6 +1778,468 @@ Updated so "Bye" and the name are rendered as separate ASCII art banners on diff
 ### ✓ Task Complete
 
 Updated so "Bye" and the name are rendered as separate ASCII art banners on different lines. With `-who Tom`, you'll see a big "Bye" followed by a big "Tom" trailing behind the rocket. All tests pass.
+
+---
+
+<sub>⏱️ 23m 38s</sub>
+
+### ℹ️ Info
+
+Session shared successfully to:
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\copilot-session-bc2032e4-0de4-47f4-bb47-462faf9839b9.md
+
+---
+
+<sub>⏱️ 37m 7s</sub>
+
+### 👤 User
+
+how about sanitizing the -who input and preventing common profanity, with a unit test
+
+---
+
+<sub>⏱️ 37m 21s</sub>
+
+### 💭 Reasoning
+
+*The user wants input sanitization and profanity filtering for the -who argument, plus unit tests. I'll create a sanitize module with a profanity filter and export it for testing.*
+
+---
+
+<sub>⏱️ 37m 33s</sub>
+
+### ✅ `create`
+
+**create a new file at C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.js.**
+
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.js
+
+```
+Created file C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.js with 1368 characters
+```
+
+
+---
+
+<sub>⏱️ 37m 39s</sub>
+
+### 💬 Copilot
+
+Now wire it into `git-rocket.js` and create the tests:
+
+---
+
+<sub>⏱️ 37m 40s</sub>
+
+### ✅ `view`
+
+**view the file at C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\git-rocket.js.**
+
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\git-rocket.js (lines 56-70)
+
+<details>
+<summary>15 lines</summary>
+
+```
+56. // Only run animation when executed directly
+57. const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/'));
+58. if (isMain) {
+59. 
+60. import('asciify').then(({ default: asciify }) => {
+61. 
+62. // Parse -who argument
+63. const whoIdx = process.argv.indexOf('-who');
+64. const name = whoIdx !== -1 && process.argv[whoIdx + 1] ? process.argv[whoIdx + 1] : null;
+65. 
+66. const rows = process.stdout.rows || 40;
+67. const totalFrames = rocket.length + rows;
+68. const duration = 5000;
+69. const frameDelay = Math.floor(duration / totalFrames);
+70.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 37m 48s</sub>
+
+### ✅ `edit`
+
+**edit the file at C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\git-rocket.js.**
+
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\git-rocket.js
+
+```
+File C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\git-rocket.js updated with changes.
+```
+
+
+---
+
+<sub>⏱️ 37m 52s</sub>
+
+### 💬 Copilot
+
+Now need to make the callback async — change `.then(` to use `async`:
+
+---
+
+<sub>⏱️ 37m 54s</sub>
+
+### ✅ `edit`
+
+**edit the file at C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\git-rocket.js.**
+
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\git-rocket.js
+
+```
+File C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\git-rocket.js updated with changes.
+```
+
+
+---
+
+<sub>⏱️ 37m 57s</sub>
+
+### 💬 Copilot
+
+Now create the sanitize tests:
+
+---
+
+<sub>⏱️ 38m 8s</sub>
+
+### ✅ `create`
+
+**create a new file at C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.test.js.**
+
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.test.js
+
+```
+Created file C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.test.js with 3316 characters
+```
+
+
+---
+
+<sub>⏱️ 38m 14s</sub>
+
+### ✅ `edit`
+
+**edit the file at C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\package.json.**
+
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\package.json
+
+```
+File C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\package.json updated with changes.
+```
+
+
+---
+
+<sub>⏱️ 38m 19s</sub>
+
+### ✅ `powershell`
+
+**Run all tests**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "command": "cd C:\\Users\\t-ste\\Documents\\GitHub\\2026-spring\\devops\\git-rocket && npm test 2>&1",
+  "description": "Run all tests",
+  "initial_wait": 15
+}
+```
+
+</details>
+
+<details>
+<summary>82 lines</summary>
+
+```
+pm test
+> git-rocket@1.0.0 test
+> node --test *.test.js▶ rocket ASCII art
+  ✔ should have 28 lines (0.664ms)
+  ✔ should have consistent line width (0.087ms)
+  ✔ should have a nose cone (lines 0-2) (0.127ms)
+  ✔ should have the upper body (lines 3-5) (0.2709ms)
+  ✔ should have the mid body with inner lines (lines 6-7) (0.07ms)
+  ✔ should have 6 identical body panels (lines 8-13) (0.1485ms)
+  ✔ should have the fin section (lines 14-17) (0.1198ms)
+  ✔ should have the nozzle section (lines 18-27) (0.261ms)
+  ✔ should have the full rocket match exactly (0.9553ms)
+✔ rocket ASCII art (4.2628ms)
+▶ flame animations
+  ✔ should have 3 flame frames (0.1651ms)
+  ✔ each flame frame should have at least 4 lines (0.0978ms)
+✔ flame animations (0.4288ms)
+▶ sanitizeWho
+  ▶ valid inputs
+    ✔ accepts a simple name (2.0002ms)
+    ✔ accepts a name with spaces (0.2908ms)
+    ✔ accepts hyphens and underscores (0.0895ms)
+    ✔ trims whitespace (0.1731ms)
+    ✔ accepts names at the max length boundary (0.1873ms)
+  ✔ valid inputs (3.2593ms)
+  ▶ invalid inputs
+    ✔ rejects null (0.4439ms)
+    ✔ rejects undefined (0.1225ms)
+    ✔ rejects empty string (0.2792ms)
+    ✔ rejects whitespace-only string (0.1692ms)
+    ✔ rejects names exceeding max length (0.1997ms)
+    ✔ rejects special characters (0.1214ms)
+  ✔ invalid inputs (1.5634ms)
+  ▶ profanity filtering
+    ✔ rejects exact profanity matches (0.1257ms)
+    ✔ rejects profanity regardless of case (0.0417ms)
+    ✔ rejects profanity embedded in a word (0.0388ms)
+    ✖ allows clean words that are not profanity (1.0344ms)
+      AssertionError [ERR_ASSERTION]: Should allow "Hello"
+      
+      false !== true
+      
+          at TestContext.<anonymous> (file:///C:/Users/t-ste/Documents/GitHub/2026-spring/devops/git-rocket/sanitize.test.js:93:16)
+at Test.runInAsyncScope (node:async_hooks:211:14)
+at Test.run (node:internal/test_runner/test:931:25)
+at Suite.processPendingSubtests (node:internal/test_runner/test:629:18)
+at Test.postRun (node:internal/test_runner/test:1042:19)
+at Test.run (node:internal/test_runner/test:970:12)
+at async Suite.processPendingSubtests (node:internal/test_runner/test:629:7) {
+        generatedMessage: false,
+        code: 'ERR_ASSERTION',
+        actual: false,
+        expected: true,
+        operator: 'strictEqual'
+      }  ✖ profanity filtering (1.355ms)
+✖ sanitizeWho (7.9722ms)
+ℹ tests 26
+ℹ suites 6
+ℹ pass 25
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.7156
+
+✖ failing tests:
+
+test at sanitize.test.js:90:5
+✖ allows clean words that are not profanity (1.0344ms)
+  AssertionError [ERR_ASSERTION]: Should allow "Hello"
+
+  false !== true
+
+      at TestContext.<anonymous> (file:///C:/Users/t-ste/Documents/GitHub/2026-spring/devops/git-rocket/sanitize.test.js
+s:93:16)
+      at Test.runInAsyncScope (node:async_hooks:211:14)
+      at Test.run (node:internal/test_runner/test:931:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:629:18)
+      at Test.postRun (node:internal/test_runner/test:1042:19)
+      at Test.run (node:internal/test_runner/test:970:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:629:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual'
+  }
+<exited with exit code 1>
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 38m 23s</sub>
+
+### 💬 Copilot
+
+"Hello" contains "hell". I'll fix the filter to match whole words only, not substrings:
+
+---
+
+<sub>⏱️ 38m 26s</sub>
+
+### ✅ `edit`
+
+**edit the file at C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.js.**
+
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.js
+
+```
+File C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.js updated with changes.
+```
+
+
+---
+
+<sub>⏱️ 38m 30s</sub>
+
+### 💬 Copilot
+
+Update the test — embedded profanity in a single token won't match whole-word now, so change that test to use a spaced form:
+
+---
+
+<sub>⏱️ 38m 33s</sub>
+
+### ✅ `edit`
+
+**edit the file at C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.test.js.**
+
+C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.test.js
+
+```
+File C:\Users\t-ste\Documents\GitHub\2026-spring\devops\git-rocket\sanitize.test.js updated with changes.
+```
+
+
+---
+
+<sub>⏱️ 38m 41s</sub>
+
+### ✅ `powershell`
+
+**Run all tests**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "command": "cd C:\\Users\\t-ste\\Documents\\GitHub\\2026-spring\\devops\\git-rocket && npm test 2>&1",
+  "description": "Run all tests",
+  "initial_wait": 15
+}
+```
+
+</details>
+
+<details>
+<summary>49 lines</summary>
+
+```
+pm test
+> git-rocket@1.0.0 test
+> node --test *.test.js▶ rocket ASCII art
+  ✔ should have 28 lines (0.6877ms)
+  ✔ should have consistent line width (0.0845ms)
+  ✔ should have a nose cone (lines 0-2) (0.1796ms)
+  ✔ should have the upper body (lines 3-5) (0.2621ms)
+  ✔ should have the mid body with inner lines (lines 6-7) (0.0742ms)
+  ✔ should have 6 identical body panels (lines 8-13) (0.1432ms)
+  ✔ should have the fin section (lines 14-17) (0.1148ms)
+  ✔ should have the nozzle section (lines 18-27) (0.2605ms)
+  ✔ should have the full rocket match exactly (1.3838ms)
+✔ rocket ASCII art (4.5133ms)
+▶ flame animations
+  ✔ should have 3 flame frames (0.1196ms)
+  ✔ each flame frame should have at least 4 lines (0.0911ms)
+✔ flame animations (0.3605ms)
+▶ sanitizeWho
+  ▶ valid inputs
+    ✔ accepts a simple name (1.3044ms)
+    ✔ accepts a name with spaces (0.4534ms)
+    ✔ accepts hyphens and underscores (0.1016ms)
+    ✔ trims whitespace (0.0818ms)
+    ✔ accepts names at the max length boundary (0.1769ms)
+  ✔ valid inputs (2.5628ms)
+  ▶ invalid inputs
+    ✔ rejects null (0.3182ms)
+    ✔ rejects undefined (0.0606ms)
+    ✔ rejects empty string (0.2772ms)
+    ✔ rejects whitespace-only string (0.1563ms)
+    ✔ rejects names exceeding max length (0.1944ms)
+    ✔ rejects special characters (1.1222ms)
+  ✔ invalid inputs (2.4004ms)
+  ▶ profanity filtering
+    ✔ rejects exact profanity matches (0.143ms)
+    ✔ rejects profanity regardless of case (0.0436ms)
+    ✔ rejects profanity as a word in the input (0.0399ms)
+    ✔ allows clean words that are not profanity (0.0545ms)
+  ✔ profanity filtering (0.3848ms)
+✔ sanitizeWho (5.9021ms)
+ℹ tests 26
+ℹ suites 6
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 119.621
+<exited with exit code 0>
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 38m 45s</sub>
+
+### 💬 Copilot
+
+All 26 tests pass.
+
+---
+
+<sub>⏱️ 38m 52s</sub>
+
+### ✅ `task_complete`
+
+**Added `sanitize.js` with input validation for `-who`:
+
+- ...**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "summary": "Added `sanitize.js` with input validation for `-who`:\n\n- **Max 20 characters**\n- **Alphanumeric, spaces, hyphens, underscores only** (blocks injection/special chars)\n- **Whole-word profanity filter** (26 common terms, case-insensitive)\n- Exits with an error message if validation fails\n\n`sanitize.test.js` covers 15 test cases across valid inputs, invalid inputs, and profanity filtering. All 26 tests pass with `npm test`."
+}
+```
+
+</details>
+
+<details>
+<summary>6 lines</summary>
+
+```
+Added `sanitize.js` with input validation for `-who`:
+
+- **Max 20 characters**
+- **Alphanumeric, spaces, hyphens, underscores only** (blocks injection/special chars)
+- **Whole-word profanity filter** (26 common terms, case-insensitive)
+- Exits with an error message if validation fails
+
+`sanitize.test.js` covers 15 test cases across valid inputs, invalid inputs, and profanity filtering. All 26 tests pass with `npm test`.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 38m 52s</sub>
+
+### ✓ Task Complete
+
+Added `sanitize.js` with input validation for `-who`:
+
+- **Max 20 characters**
+- **Alphanumeric, spaces, hyphens, underscores only** (blocks injection/special chars)
+- **Whole-word profanity filter** (26 common terms, case-insensitive)
+- Exits with an error message if validation fails
+
+`sanitize.test.js` covers 15 test cases across valid inputs, invalid inputs, and profanity filtering. All 26 tests pass with `npm test`.
 
 ---
 
