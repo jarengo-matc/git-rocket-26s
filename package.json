@@ -7,6 +7,7 @@
   "type": "module",
   "main": "git-rocket.js",
   "scripts": {
+    "start": "node git-rocket.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
