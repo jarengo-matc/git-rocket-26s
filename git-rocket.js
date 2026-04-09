@@ -25,8 +25,8 @@ export const rocket = [
   String.raw`            ||          / `,
   String.raw`  \         ||         /  `,
   String.raw`   \________||  ______/   `,
-  String.raw`        /   ||            `,
-  String.raw`       /____||__          `,
+  String.raw`        /   ||    \        `,
+  String.raw`       /____||____ \         `,
 ];
 
 export const flames = [
