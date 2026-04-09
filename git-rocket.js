@@ -31,15 +31,17 @@ export const rocket = [
 
 export const flames = [
   [
-    String.raw`          \  :  /         `,
-    String.raw`           . : .          `,
+    String.raw`          \ *** /         `,
+    String.raw`          *  *  *         `,
+    String.raw`          \  *  /         `,
+    String.raw`           . * .          `,
     String.raw`        --- : : ---       `,
     String.raw`            :*:           `,
   ],
   [
     String.raw`           .* *.          `,
     String.raw`        *  : * :  *       `,
-    String.raw`          .: : :.         `,
+    String.raw`          .: * :.         `,
     String.raw`        *-- :.: --*       `,
     String.raw`            .*.           `,
   ],
