@@ -98,17 +98,30 @@ if (name) {
 Promise.all(bannerPromises).then(results => {
   byeBannerLines = results.flatMap(r => r.split('\n').filter(l => l.trim()));
 
+  function colorizeFlame(line) {
+    return line.split('').map(ch => {
+      if (ch === ' ') return ch;
+      const r = Math.random();
+      if (r < 0.4) return '\x1B[91m' + ch + '\x1B[0m'; // bright red
+      if (r < 0.7) return '\x1B[31m' + ch + '\x1B[0m'; // red
+      return '\x1B[33m' + ch + '\x1B[0m';               // yellow
+    }).join('');
+  }
+
   const interval = setInterval(() => {
   const flameSet = flames[frame % flames.length];
   const fullRocket = [...rocket, ...flameSet, ...byeBannerLines];
   const offset = rows - frame;
+  const flameStart = rocket.length;
+  const flameEnd = rocket.length + flameSet.length;
 
   process.stdout.write('\x1B[H'); // move cursor home
 
   for (let row = 0; row < rows; row++) {
     const rocketRow = row - offset;
     if (rocketRow >= 0 && rocketRow < fullRocket.length) {
-      process.stdout.write(fullRocket[rocketRow]);
+      const isFlame = rocketRow >= flameStart && rocketRow < flameEnd;
+      process.stdout.write(isFlame ? colorizeFlame(fullRocket[rocketRow]) : fullRocket[rocketRow]);
     } else {
       process.stdout.write(' '.repeat(28));
     }
