@@ -9,7 +9,7 @@ export const rocket = [
   String.raw`        /   SB   \        `,
   String.raw`       |    JA    |       `,
   String.raw`       |    BP    |       `,
-  String.raw`       |    RV    |       `,
+  String.raw`       |    RV            `,
   String.raw`       |    JM    |       `,
   String.raw`       |    DR    |       `,
   String.raw`       |    NK    |       `,
