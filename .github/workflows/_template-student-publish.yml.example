@@ -7,17 +7,18 @@
 #      <your-name>-publish.yml
 #    Example: tsteele-publish.yml
 #
-# 2. Set YOUR_BRANCH below to the name of YOUR branch.
+# 2. Replace YOUR_BRANCH (appears twice below) with your branch name.
 #    Example: tsteele/rocket-page
 #
-# 3. Set YOUR_FILENAME below to the HTML filename you want
-#    published. Use your name so it doesn't clash with others.
+# 3. Replace YOUR_FILENAME with your desired HTML filename.
+#    Use your name so it doesn't clash with others.
 #    Example: tsteele.html
 #
 # 4. Commit this workflow file to YOUR branch and push.
 #    On every push the workflow will open (or update) a pull
 #    request to add your rocket page to main's docs/ folder.
-#    Once the PR is merged, GitHub Pages will serve your page.
+#    Once the PR is merged, GitHub Pages will serve your page at:
+#    https://<org>.github.io/git-rocket/YOUR_FILENAME
 # ─────────────────────────────────────────────────────────────
 
 name: "Publish my rocket page"
@@ -29,7 +30,7 @@ env:
 on:
   push:
     branches:
-      - YOUR_BRANCH  # match STUDENT_BRANCH above
+      - YOUR_BRANCH  # ← must match STUDENT_BRANCH above
 
 permissions:
   contents: write
@@ -58,21 +59,26 @@ jobs:
       - name: Rename built file to your filename
         run: cp docs/index.html docs/${{ env.OUTPUT_FILENAME }}
 
-      - name: Open or update PR to publish page
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # Work on a dedicated publish branch so the PR stays tidy
-          branch: publish/${{ env.OUTPUT_FILENAME }}
-          base: main
-          # Move the built file into docs/ under the student's filename
-          add-paths: |
-            docs/${{ env.OUTPUT_FILENAME }}
-          commit-message: "publish: ${{ env.OUTPUT_FILENAME }} from ${{ env.STUDENT_BRANCH }}"
-          title: "Publish ${{ env.OUTPUT_FILENAME }} to GitHub Pages"
-          body: |
-            Automated PR from the `${{ env.STUDENT_BRANCH }}` publish workflow.
-            Merging this will add `docs/${{ env.OUTPUT_FILENAME }}` to `main` and
-            trigger a GitHub Pages deployment.
-          # Re-use the same PR on subsequent pushes instead of opening a new one
-          delete-branch: false
+      - name: Push built file to publish branch and open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PUBLISH_BRANCH="publish/${{ env.OUTPUT_FILENAME }}"
+
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+
+          git switch -c "$PUBLISH_BRANCH" 2>/dev/null || git switch "$PUBLISH_BRANCH"
+
+          git add docs/${{ env.OUTPUT_FILENAME }}
+          git diff --cached --quiet && echo "No changes, skipping PR." && exit 0
+
+          git commit -m "publish: ${{ env.OUTPUT_FILENAME }} from ${{ env.STUDENT_BRANCH }}"
+          git push origin "$PUBLISH_BRANCH" --force
+
+          gh pr create \
+            --base main \
+            --head "$PUBLISH_BRANCH" \
+            --title "Publish ${{ env.OUTPUT_FILENAME }} to GitHub Pages" \
+            --body "Automated PR from \`${{ env.STUDENT_BRANCH }}\`. Merging will add \`docs/${{ env.OUTPUT_FILENAME }}\` to main and trigger a GitHub Pages deployment." \
+          2>/dev/null || echo "PR already exists, updated branch."
