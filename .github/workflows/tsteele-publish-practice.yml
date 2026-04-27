@@ -68,9 +68,19 @@ jobs:
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
 
-          git switch -c "$PUBLISH_BRANCH" 2>/dev/null || git switch "$PUBLISH_BRANCH"
+          # Save the built file before switching branches
+          cp docs/${{ env.OUTPUT_FILENAME }} /tmp/${{ env.OUTPUT_FILENAME }}
 
-          git add -f docs/${{ env.OUTPUT_FILENAME }}
+          # Base the publish branch on main so the PR only contains the HTML file
+          git fetch origin main
+          git switch -c "$PUBLISH_BRANCH" origin/main 2>/dev/null || \
+            git switch "$PUBLISH_BRANCH" && git reset --hard origin/main
+
+          # Restore the built file
+          mkdir -p docs
+          cp /tmp/${{ env.OUTPUT_FILENAME }} docs/${{ env.OUTPUT_FILENAME }}
+
+          git add docs/${{ env.OUTPUT_FILENAME }}
           git diff --cached --quiet && echo "No changes, skipping PR." && exit 0
 
           git commit -m "publish: ${{ env.OUTPUT_FILENAME }} from ${{ env.STUDENT_BRANCH }}"
