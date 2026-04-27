@@ -21,7 +21,8 @@
 #    https://<org>.github.io/git-rocket/YOUR_FILENAME
 # ─────────────────────────────────────────────────────────────
 
-name: "Publish my rocket page"
+name: "Publish rocket page"
+run-name: "Publish ${{ github.ref_name }} → ${{ github.event.head_commit.message }}"
 
 env:
   STUDENT_BRANCH: tsteele/week-14-practice     # e.g. tsteele/rocket-page
