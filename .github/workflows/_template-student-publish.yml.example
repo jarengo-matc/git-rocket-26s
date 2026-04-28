@@ -65,18 +65,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          STABLE_BRANCH="publish/${{ env.OUTPUT_FILENAME }}"
+          PUBLISH_BRANCH="publish/${{ env.OUTPUT_FILENAME }}"
 
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
 
-          open_pr_count=$(gh pr list --head "$STABLE_BRANCH" --state open --json number --jq 'length')
+          open_pr_count=$(gh pr list --head "$PUBLISH_BRANCH" --state open --json number --jq 'length')
           if [ "$open_pr_count" -gt 0 ]; then
-            PUBLISH_BRANCH="$STABLE_BRANCH"
             echo "Open PR already exists — updating $PUBLISH_BRANCH."
           else
-            PUBLISH_BRANCH="${STABLE_BRANCH}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-            echo "No open PR exists — creating $PUBLISH_BRANCH."
+            echo "No open PR exists — creating a new PR from $PUBLISH_BRANCH."
           fi
 
           # Save the built file before switching branches
@@ -97,7 +95,7 @@ jobs:
           git commit -m "publish: ${{ env.OUTPUT_FILENAME }} from ${{ env.STUDENT_BRANCH }}"
           git push origin "$PUBLISH_BRANCH" --force
 
-          if [ "$PUBLISH_BRANCH" = "$STABLE_BRANCH" ]; then
+          if [ "$open_pr_count" -gt 0 ]; then
             echo "Open PR updated."
           else
             gh pr create \
