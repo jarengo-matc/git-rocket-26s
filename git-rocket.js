@@ -1,6 +1,6 @@
 export const rocket = [
   String.raw`            /\            `,
-  String.raw`           /  \           `,
+  String.raw`           /**\           `,
   String.raw`          /____\          `,
   String.raw`           |**|           `,
   String.raw`           |**|           `,
