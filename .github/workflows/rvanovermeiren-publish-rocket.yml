@@ -27,7 +27,7 @@ run-name: "Publish ${{ github.ref_name }} → ${{ github.event.head_commit.messa
 
 env:
   STUDENT_BRANCH: rvanovermeiren/publish-rocket     # e.g. tsteele/rocket-page
-  OUTPUT_FILENAME: rvanovermeriren-rocket.html  # e.g. tsteele.html
+  OUTPUT_FILENAME: rvanovermeiren-rocket.html  # e.g. tsteele.html
 
 on:
   push:
